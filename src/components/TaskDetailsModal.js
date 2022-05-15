@@ -1,9 +1,11 @@
 import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
-import { Overlay } from '@rneui/themed';
+import { Alert, View, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { Overlay, Icon } from '@rneui/themed';
 
-import { fontSize, padding } from '../constants/styles';
+import { colors, fontSize, padding } from '../constants/styles';
 import formatTime from '../utils/tasks/formatTime';
+import useTasksContext from '../hooks/useTasksContext';
+import * as tasksActions from '../store/actions/tasks';
 
 const getDateTimeString = (timestamp) => {
   if (timestamp === undefined) return '';
@@ -21,10 +23,27 @@ const TaskDetailsModal = ({
   isVisible,
   hideModal,
 }) => {
+  const [, dispatch] = useTasksContext();
+
   let taskTrackedTime = task?.trackedTime;
   if (task && currentlyTracked && task.id === currentlyTracked.id)
     taskTrackedTime =
       Math.max(now, Date.now()) - currentlyTracked.startTime + task.trackedTime;
+
+  const removeTask = () => {
+    const handleRemove = () => {
+      hideModal();
+      dispatch(tasksActions.removeTask(task?.id));
+    };
+
+    Alert.alert('Are you sure?', "Removed tasks can't be restored.", [
+      {
+        text: 'Cancel',
+        style: 'cancel',
+      },
+      { text: 'OK', onPress: handleRemove },
+    ]);
+  };
 
   return (
     <Overlay
@@ -32,7 +51,17 @@ const TaskDetailsModal = ({
       onBackdropPress={hideModal}
       overlayStyle={styles.overlay}
     >
-      <Text style={styles.title}>{task?.title}</Text>
+      <View style={styles.row}>
+        <Text style={styles.title}>{task?.title}</Text>
+        <TouchableOpacity onPress={removeTask}>
+          <Icon
+            name={'trash'}
+            type="font-awesome"
+            color={colors.lightBlue}
+            size={36}
+          />
+        </TouchableOpacity>
+      </View>
       <View>
         <View style={styles.row}>
           <Text style={styles.text}>Tracked time: </Text>

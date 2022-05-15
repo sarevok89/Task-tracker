@@ -22,17 +22,21 @@ export default (state, action) => {
     case ADD_TASK:
       return {
         ...state,
-        lastUpdated: Date.now(),
+        lastUpdated: now,
         tasks: [action.task, ...state.tasks],
       };
     case REMOVE_TASK: {
+      const { currentlyTracked } = state;
       const updatedTasks = [...state.tasks].filter(
         (task) => task.id !== action.taskId
       );
+      const updatedCurrentlyTracked =
+        action.taskId === currentlyTracked.id ? null : currentlyTracked;
 
       return {
         ...state,
-        lastUpdated: Date.now(),
+        currentlyTracked: updatedCurrentlyTracked,
+        lastUpdated: now,
         tasks: updatedTasks,
       };
     }

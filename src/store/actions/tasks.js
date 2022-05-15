@@ -18,7 +18,7 @@ export const addTask = (title) => {
   return { type: ADD_TASK, task };
 };
 
-export const removeTask = async (taskId) => {
+export const removeTask = (taskId) => {
   return { type: REMOVE_TASK, taskId };
 };
 
