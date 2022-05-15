@@ -3,7 +3,7 @@ import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Icon } from '@rneui/themed';
 
 import { colors, fontSize, padding } from '../constants/styles';
-import { useTasksContext } from '../hooks/useTasksContext';
+import useTasksContext from '../hooks/useTasksContext';
 import * as tasksActions from '../store/actions/tasks';
 
 const Task = ({ task, time, onPress }) => {

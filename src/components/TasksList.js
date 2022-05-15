@@ -4,7 +4,7 @@ import { FlatList } from 'react-native';
 import Task from './Task';
 import formatTime from '../utils/tasks/formatTime';
 import useNow from '../hooks/useNow';
-import { useTasksContext } from '../hooks/useTasksContext';
+import useTasksContext from '../hooks/useTasksContext';
 import TaskDetailsModal from './TaskDetailsModal';
 
 const TasksList = () => {

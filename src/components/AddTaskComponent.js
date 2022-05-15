@@ -7,7 +7,7 @@ import SubmitButton from './forms/SubmitButton';
 import TextInput from './forms/TextInput';
 import { padding } from '../constants/styles';
 import * as tasksActions from '../store/actions/tasks';
-import { useTasksContext } from '../hooks/useTasksContext';
+import useTasksContext from '../hooks/useTasksContext';
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().required().min(3).max(20).label('Title'),

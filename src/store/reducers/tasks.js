@@ -13,6 +13,8 @@ export const initialState = {
 };
 
 export default (state, action) => {
+  const now = Date.now();
+
   switch (action.type) {
     case SET_UP_STATE: {
       return action.state;
@@ -36,7 +38,6 @@ export default (state, action) => {
     }
     case START_TRACKING_TASK: {
       const updatedTasks = [...state.tasks];
-      const now = Date.now();
       const task = updatedTasks.find((task) => task.id === action.taskId);
       task.startedTracking = now;
       task.stoppedTracking = null;
@@ -53,17 +54,16 @@ export default (state, action) => {
 
       return {
         ...state,
-        lastUpdated: Date.now(),
+        lastUpdated: now,
         currentlyTracked: {
           id: task.id,
-          startTime: Date.now(),
+          startTime: now,
         },
         tasks: updatedTasks,
       };
     }
     case STOP_TRACKING_TASK: {
       const updatedTasks = [...state.tasks];
-      const now = Date.now();
       const task = updatedTasks.find((task) => task.id === action.taskId);
       task.stoppedTracking = now;
 

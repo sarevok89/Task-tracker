@@ -2,6 +2,8 @@ import { useContext } from 'react';
 
 import { TasksContext } from '../contexts/TasksContext';
 
-export const useTasksContext = () => {
+const useTasksContext = () => {
   return useContext(TasksContext);
 };
+
+export default useTasksContext;
