@@ -5,11 +5,7 @@ export const START_TRACKING_TASK = 'START_TRACKING_TASK';
 export const STOP_TRACKING_TASK = 'STOP_TRACKING_TASK';
 
 export const setUpTasksState = (state) => {
-  try {
-    return { type: SET_UP_STATE, state };
-  } catch (err) {
-    console.log('Error while loading tasks:', err);
-  }
+  return { type: SET_UP_STATE, state };
 };
 
 export const addTask = (title) => {

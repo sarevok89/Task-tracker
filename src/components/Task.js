@@ -1,14 +1,12 @@
-import React, { memo, useState } from 'react';
+import React, { memo } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Icon } from '@rneui/themed';
 
 import { colors, fontSize, padding } from '../constants/styles';
 import { useTasksContext } from '../hooks/useTasksContext';
 import * as tasksActions from '../store/actions/tasks';
-import TaskDetailsModal from './TaskDetailsModal';
 
-const Task = ({ task, time }) => {
-  const [showModal, setShowModal] = useState();
+const Task = ({ task, time, onPress }) => {
   const [state, dispatch] = useTasksContext();
   const { title } = task;
   const { currentlyTracked } = state;
@@ -21,7 +19,7 @@ const Task = ({ task, time }) => {
 
   return (
     <>
-      <TouchableOpacity onPress={() => setShowModal(true)}>
+      <TouchableOpacity onPress={onPress}>
         <View style={styles.container}>
           <View style={styles.leftColumn}>
             <Text numberOfLines={1} style={styles.title}>
@@ -38,19 +36,13 @@ const Task = ({ task, time }) => {
                     : 'play-circle'
                 }
                 type="font-awesome"
-                color="#517fa4"
+                color={colors.lightBlue}
                 size={40}
               />
             </TouchableOpacity>
           </View>
         </View>
       </TouchableOpacity>
-      <TaskDetailsModal
-        task={task}
-        time={task.time}
-        isVisible={showModal}
-        hideModal={() => setShowModal(false)}
-      />
     </>
   );
 };
@@ -74,6 +66,7 @@ const styles = StyleSheet.create({
   rightColumn: {
     flex: 4,
     flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: 'space-around',
   },
   title: {

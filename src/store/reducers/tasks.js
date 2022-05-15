@@ -47,6 +47,7 @@ export default (state, action) => {
 
       if (currentlyTrackedTask) {
         const trackedTime = now - state.currentlyTracked.startTime;
+        currentlyTrackedTask.stoppedTracking = now;
         currentlyTrackedTask.trackedTime += trackedTime;
       }
 

@@ -5,34 +5,73 @@ import { Overlay } from '@rneui/themed';
 import { fontSize, padding } from '../constants/styles';
 import formatTime from '../utils/tasks/formatTime';
 
-const TaskDetailsModal = ({ task, time, isVisible, hideModal }) => {
-  const { title, startedTracking, stoppedTracking } = task;
+const getDateTimeString = (timestamp) => {
+  if (timestamp === undefined) return '';
+  if (timestamp === null) return 'In progress';
 
-  const startTime = new Date(startedTracking).toUTCString();
-  const stopTime = stoppedTracking
-    ? new Date(stoppedTracking).toUTCString()
-    : 'in progress';
+  const dateObj = new Date(timestamp);
+
+  return `${dateObj.toLocaleDateString()} ${dateObj.toLocaleTimeString()}`;
+};
+
+const TaskDetailsModal = ({
+  currentlyTracked,
+  task,
+  now,
+  isVisible,
+  hideModal,
+}) => {
+  let taskTrackedTime = task?.trackedTime;
+  if (task && currentlyTracked && task.id === currentlyTracked.id)
+    taskTrackedTime =
+      Math.max(now, Date.now()) - currentlyTracked.startTime + task.trackedTime;
 
   return (
-    <Overlay isVisible={!!isVisible} onBackdropPress={hideModal}>
-      <View style={styles.container}>
-        <Text style={styles.title}>{title}</Text>
-        <Text style={styles.text}>{`Tracked time: ${formatTime(time)}`}</Text>
-        <Text style={styles.text}>{`Started: ${startTime}`}</Text>
-        <Text style={styles.text}>{`Finished: ${stopTime}`}</Text>
+    <Overlay
+      isVisible={!!isVisible}
+      onBackdropPress={hideModal}
+      overlayStyle={styles.overlay}
+    >
+      <Text style={styles.title}>{task?.title}</Text>
+      <View>
+        <View style={styles.row}>
+          <Text style={styles.text}>Tracked time: </Text>
+          <Text style={styles.text}>{formatTime(taskTrackedTime)}</Text>
+        </View>
+        <View style={styles.row}>
+          <Text style={styles.text}>Started time: </Text>
+          <Text style={styles.text}>
+            {getDateTimeString(task?.startedTracking)}
+          </Text>
+        </View>
+        <View style={styles.row}>
+          <Text style={styles.text}>Finished time: </Text>
+          <Text style={styles.text}>
+            {getDateTimeString(task?.stoppedTracking)}
+          </Text>
+        </View>
       </View>
     </Overlay>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    paddingVertical: padding.sm,
-    paddingHorizontal: padding.md,
+  overlay: {
+    width: '90%',
+    height: 180,
+    justifyContent: 'space-evenly',
+    paddingHorizontal: padding.lg,
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   title: {
     fontSize: fontSize._20,
     marginBottom: padding.sm,
+  },
+  text: {
+    fontSize: fontSize._16,
   },
 });
 
