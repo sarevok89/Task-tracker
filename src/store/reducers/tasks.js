@@ -31,7 +31,7 @@ export default (state, action) => {
         (task) => task.id !== action.taskId
       );
       const updatedCurrentlyTracked =
-        action.taskId === currentlyTracked.id ? null : currentlyTracked;
+        action.taskId === currentlyTracked?.id ? null : currentlyTracked;
 
       return {
         ...state,
