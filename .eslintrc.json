@@ -1,0 +1,46 @@
+{
+  "parser": "babel-eslint",
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true,
+    "react-native/react-native": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 11,
+    "sourceType": "module"
+  },
+  "plugins": [
+    "react",
+    "react-native",
+    "react-hooks",
+    "prettier"
+  ],
+  "rules": {
+    "no-unused-vars": 1,
+    "no-else-return": 1,
+    "react/prop-types": 0,
+    "react/self-closing-comp": 1,
+    "react-native/no-raw-text": 2,
+    "react-native/no-unused-styles": 2,
+    "react-native/no-inline-styles": 1,
+    "react-native/no-color-literals": 1,
+    "react-native/split-platform-components": 2,
+    "react-native/no-single-element-style-arrays": 2,
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn"
+  }
+}
